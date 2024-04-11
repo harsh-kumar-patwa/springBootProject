@@ -11,15 +11,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/products")
 public class ProductController {
     private ProductServices productServices;
+
+
     public ProductController(ProductServices productServices){
         this.productServices=productServices;
     }
-    @GetMapping("/products")
+
+    @GetMapping
     public Product[] getAllProducts(){
         return productServices.getAllProducts();
     }
-    @GetMapping("/products/{id}")
-    public Product getProductById(@PathVariable("id")Long id){
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") Long id){
+//        System.out.printf("Hello");
 //        ResponseEntity<Product> responseEntity = null;
 //        ResponseEntity<ExceptionDto> exceptionDtoResponseEntity = null;
 //        Product product = null;

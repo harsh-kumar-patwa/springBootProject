@@ -1,5 +1,6 @@
 package com.harshkumarpatwa.productservicebydeepakkasera.services;
 
+import com.harshkumarpatwa.productservicebydeepakkasera.exceptions.CategoryNotFoundException;
 import com.harshkumarpatwa.productservicebydeepakkasera.models.Category;
 import com.harshkumarpatwa.productservicebydeepakkasera.models.Product;
 import com.harshkumarpatwa.productservicebydeepakkasera.respositories.CategoryRepository;
@@ -39,6 +40,12 @@ public class SelfProductService implements ProductServices {
             Category savedCategory  = categoryRepository.save(category);
             product.setCategory(savedCategory);
         }
+        Product product1 = productRepository.save(product);
+        Optional<Category> optionalCategory = categoryRepository.findById(product1.getCategory().getId());
+        if(optionalCategory.isEmpty()){
+            throw new CategoryNotFoundException("Category not found");
+        }
+        product1.setCategory(optionalCategory.get());
         return productRepository.save(product);
     }
 }
